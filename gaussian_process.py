@@ -106,9 +106,9 @@ class GaussianProcess(object):
             self._mask_der = np.ravel(
                 np.add(
                     # initial mask
-                    np.tile(self._mask.reshape(-1, 1), (1, X.shape[1] + 1)).T,
+                    np.tile(self._mask.reshape(-1, 1), (1, X_train.shape[1] + 1)).T,
                     # step = # of observations
-                    np.arange(0, X.shape[0]*X.shape[1] + 1, X.shape[0]).reshape(-1, 1)))
+                    np.arange(0, X_train.shape[0]*X_train.shape[1] + 1, X_train.shape[0]).reshape(-1, 1)))
             self._y_train = Y_train[self._mask_der]
         else:
             self._y_train = Y_train[self._mask]
@@ -163,7 +163,7 @@ class GaussianProcess(object):
                 returned
         Returns:
             a list of arrays where each array is a single sample over the
-            function space for the given input X_test.        
+            function space for the given input X_test.
         """
         y_mean, y_cov = self.predict(X_test, cov=True)
         if y_mean.ndim == 1:
